@@ -358,3 +358,9 @@ gh api -H "Accept: application/vnd.github+json" --hostname github-demo.devopshub
 gh api --method POST -H "Accept: application/vnd.github+json" /admin/organizations --hostname github-demo.devopshub.cn -f login='infintestorg1' -f profile_name='cli test.' -f admin='localadmin'
 
 gh api --method POST -H 'Accept: application/vnd.github+json' /admin/organizations --hostname github-demo.devopshub.cn -f login='infintestorg1' -f profile_name='cli test.' -f admin='localadmin'
+
+## 问题
+
+
+https://git.savannah.nongnu.org/git/lwip 有同步
+ssh://git@gitlab.espressif.cn:27227/igrokhotkov/newlib_xtensa-2.2.0.git 未同步
