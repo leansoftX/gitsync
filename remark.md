@@ -4,8 +4,6 @@
 
 https://portal.azure.cn/#@infineon2023.partner.onmschina.cn/resource/subscriptions/f244e082-0e0f-4210-8d0d-beba7ef6d883/resourcegroups/github-poc/providers/Microsoft.Compute/virtualMachines/ghes-mooncake/overview
 
-Test@infineon2023.partner.onmschina.cn
-Jan032023
 
 https://github-demo.devopshub.cn/
 
@@ -69,13 +67,13 @@ winget install --id GitHub.cli
 
 #### 登陆
 
-全部权限TOKEN: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
+
 
 gh auth login 
 gh auth login --hostname github-demo.devopshub.cn
 export GH_HOST=<hostname>
 export GH_ENTERPRISE_TOKEN=<access-token>
-gh auth login --hostname github-demo.devopshub.cn --with-token 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
+gh auth login --hostname github-demo.devopshub.cn --with-token [token]
 gh auth refresh -h github-demo.devopshub.cn -s site_admin
 gh auth login --hostname github-demo.devopshub.cn -s site_admin
 gh auth logout --hostname github-demo.devopshub.cn
