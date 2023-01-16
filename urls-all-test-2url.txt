@@ -1,0 +1,2 @@
+https://github.com/Infineon/cce-mtb-psoc6-dps310
+https://github.com/Infineon/cce-mtb-mqtt-client-over-lte

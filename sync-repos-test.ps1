@@ -13,7 +13,7 @@ $synclogPath = $PSScriptRoot+"\_temp\_logs\sync-"+$nowTime+".log"
 Write-Output "---DEBUG---,$nowTime,sync start" | Out-File -FilePath $synclogPath -Append
 type $synclogPath -Last 2
 
-$file="..\urls-all.txt"
+$file="$PSScriptRoot\urls-all-test-2url.txt"
 $ghe="github-demo.devopshub.cn"
 $gheadmin="localadmin"
 $orgReady=$false
