@@ -4,8 +4,6 @@
 
 https://portal.azure.cn/#@infineon2023.partner.onmschina.cn/resource/subscriptions/f244e082-0e0f-4210-8d0d-beba7ef6d883/resourcegroups/github-poc/providers/Microsoft.Compute/virtualMachines/ghes-mooncake/overview
 
-Test@infineon2023.partner.onmschina.cn
-Jan032023
 
 https://github-demo.devopshub.cn/
 
@@ -69,13 +67,13 @@ winget install --id GitHub.cli
 
 #### 登陆
 
-全部权限TOKEN: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
+
 
 gh auth login 
 gh auth login --hostname github-demo.devopshub.cn
 export GH_HOST=<hostname>
 export GH_ENTERPRISE_TOKEN=<access-token>
-gh auth login --hostname github-demo.devopshub.cn --with-token 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
+gh auth login --hostname github-demo.devopshub.cn --with-token [token]
 gh auth refresh -h github-demo.devopshub.cn -s site_admin
 gh auth login --hostname github-demo.devopshub.cn -s site_admin
 gh auth logout --hostname github-demo.devopshub.cn
@@ -364,14 +362,10 @@ gh api --method POST -H "Accept: application/vnd.github+json" /admin/organizatio
 gh api --method POST -H 'Accept: application/vnd.github+json' /admin/organizations --hostname github-demo.devopshub.cn -f login='infintestorg1' -f profile_name='cli test.' -f admin='localadmin'
 
 ## 问题
-
-
 https://git.savannah.nongnu.org/git/lwip 有同步
 ssh://git@gitlab.espressif.cn:27227/igrokhotkov/newlib_xtensa-2.2.0.git 未同步
 
-
 ## 定时任务脚本
-
 #脚本中调用的zabbix.ps1 的作用是Get-Content zabbix配置文内容并out-file到另一个文件。完全可以当作备份。
 
 $action = New-ScheduledTaskAction -Execute "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"  -Argument "-file C:\Users\shi001admin\Desktop\zabbix.ps1" 
