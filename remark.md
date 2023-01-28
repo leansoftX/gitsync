@@ -365,6 +365,12 @@ gh api --method POST -H 'Accept: application/vnd.github+json' /admin/organizatio
 https://git.savannah.nongnu.org/git/lwip 有同步
 ssh://git@gitlab.espressif.cn:27227/igrokhotkov/newlib_xtensa-2.2.0.git 未同步
 
+缺的：
+https://github-demo.devopshub.cn/nodejs/http-parser.git
+
+增量：
+https://github.com/cypresssemiconductorco/mtb-example-btsdk-ble-alert-server 是这个地址自动跳到了： https://github.com/Infineon/mtb-example-btsdk-ble-alert-server
+
 ## 定时任务脚本
 #脚本中调用的zabbix.ps1 的作用是Get-Content zabbix配置文内容并out-file到另一个文件。完全可以当作备份。
 

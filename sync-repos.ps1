@@ -1,3 +1,5 @@
+cd $PSScriptRoot
+
 if (!(Test-Path "_temp")) {
     mkdir _temp
 }
@@ -133,7 +135,7 @@ if (Test-Path $file) {
                 Write-Output "`n---DEBUG---,push End. clear repo file"  | Out-File -FilePath $synclogPath -Append
                 type $synclogPath -Last 2
                 cd ..
-                ## rmdir $repo -Force -Recurse
+                rmdir $repo -Force -Recurse
             }
             else {
                 Write-Output "`n---DEBUG---, Clone $url Fail."  | Out-File -FilePath $synclogPath -Append

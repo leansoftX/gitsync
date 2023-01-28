@@ -1,0 +1,1 @@
+https://github.com/cypresssemiconductorco/mtb-example-btsdk-ble-alert-server

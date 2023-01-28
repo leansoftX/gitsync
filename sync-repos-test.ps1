@@ -1,3 +1,5 @@
+cd $PSScriptRoot
+
 if (!(Test-Path "_temp")) {
     mkdir _temp
 }
@@ -19,6 +21,10 @@ $gheadmin="localadmin"
 $orgReady=$false
 $repoReady=$false
 [string[]]$errorRepos=@()
+
+## $loginStatus = Write-Output (gh auth status -t)
+## Write-Output "---DEBUG---,gite login Status: $loginStatus`n" | Out-File -FilePath $synclogPath -Append 
+## type $synclogPath -Last 2
  
 if (Test-Path $file) {
     Write-Output "---DEBUG---,Find file $file`n" | Out-File -FilePath $synclogPath -Append 

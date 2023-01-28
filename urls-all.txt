@@ -818,3 +818,4 @@ https://github.com/espressif/esp-thread-lib.git
 https://github.com/espressif/esp-ieee802154-lib.git
 https://github.com/mruby/mruby
 https://github.com/tatsuhiro-t/neverbleed.git
+https://github-demo.devopshub.cn/nodejs/http-parser.git
