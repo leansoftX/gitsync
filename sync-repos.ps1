@@ -15,7 +15,7 @@ $synclogPath = $PSScriptRoot+"\_temp\_logs\sync-"+$nowTime+".log"
 Write-Output "---DEBUG---,$nowTime,sync start" | Out-File -FilePath $synclogPath -Append
 type $synclogPath -Last 2
 
-$file="..\urls-all.txt"
+$file="..\error-git-repos.txt"
 $ghe="github-demo.devopshub.cn"
 $gheadmin="localadmin"
 $orgReady=$false
@@ -41,7 +41,7 @@ if (Test-Path $file) {
         $schema=$splitUrl[0]
         $domain=$splitUrl[2]
         $org=$splitUrl[3]
-        $repo=$splitUrl[4]
+        $repo=$splitUrl[4].Replace(".git","")
         Write-Output "`n---DEBUG---,splitUrl:$schema,$domain,$org,$repo"  | Out-File -FilePath $synclogPath -Append
         type $synclogPath -Last 2
         ## pause

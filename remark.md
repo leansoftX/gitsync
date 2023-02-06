@@ -366,10 +366,103 @@ https://git.savannah.nongnu.org/git/lwip 有同步
 ssh://git@gitlab.espressif.cn:27227/igrokhotkov/newlib_xtensa-2.2.0.git 未同步
 
 缺的：
+https://github.com/nodejs/http-parser.git
 https://github-demo.devopshub.cn/nodejs/http-parser.git
 
 增量：
 https://github.com/cypresssemiconductorco/mtb-example-btsdk-ble-alert-server 是这个地址自动跳到了： https://github.com/Infineon/mtb-example-btsdk-ble-alert-server
+
+v2 urls:
+没了的：
+https://github.com/cypresssemiconductorco/mtb-example-btsdk-hid-dual-mode-keyboard
+https://github.com/cypresssemiconductorco/mtb-examples-CYW920819EVB-02-btsdk-hid
+https://github.com/cypresssemiconductorco/mtb-examples-CYW920819REF-KB-01-btsdk-hid
+https://github.com/cypresssemiconductorco/TARGET_CYW920819REF-KB-01
+https://github.com/cypresssemiconductorco/mtb-example-anycloud-ble-wifi-onboarding
+https://github.com/cypresssemiconductorco/mtb-example-anycloud-ble-battery-server
+https://github.com/cypresssemiconductorco/mtb-example-anycloud-ble-capsense-buttons-slider
+https://github.com/cypresssemiconductorco/mtb-example-anycloud-offload-tcp-keepalive
+https://github.com/cypresssemiconductorco/mtb-example-psoc6-adc-basic
+https://github.com/cypresssemiconductorco/mtb-example-anycloud-wifi-web-server
+https://github.com/cypresssemiconductorco/mtb-example-anycloud-ble-wifi-gateway
+https://github.com/Infineon/mtb-example-lz4-demo
+https://github.com/Infineon/mtb-example-btsdk-low-power-20819
+https://github.com/Infineon/mtb-example-btstack-freertos-mesh-switch-dimmer
+https://github.com/Infineon/mtb-example-btstack-freertos-mesh-light-dimmable
+https://github.com/Infineon/mtb-example-usb-device-hid-generic
+https://github.com/Infineon/mtb-example-usb-device-suspend
+https://github.com/Infineon/mtb-example-usb-device-msc-filesystem-freertos
+https://github.com/Infineon/mtb-example-usb-host-cdc-echo
+https://github.com/Infineon/mtb-example-usb-device-cdc-echo
+https://github.com/Infineon/mtb-example-usb-device-hid-mouse
+https://github.com/Infineon/mtb-example-audio-streaming
+https://github.com/cypresssemiconductorco/mtb-example-psoc6-i2c-master
+https://github.com/cypresssemiconductorco/mtb-example-psoc6-spi-master
+https://github.com/cypresssemiconductorco/mtb-example-psoc6-qspi-readwrite
+https://github.com/cypresssemiconductorco/mtb-example-psoc6-wdt
+https://github.com/cypresssemiconductorco/mtb-example-anycloud-secure-tcp-client
+https://github.com/cypresssemiconductorco/mtb-example-psoc6-i2c-master
+https://github.com/cypresssemiconductorco/mtb-example-psoc6-spi-master
+https://github.com/cypresssemiconductorco/mtb-example-psoc6-qspi-readwrite
+https://github.com/cypresssemiconductorco/mtb-example-psoc6-wdt
+https://github.com/cypresssemiconductorco/mtb-example-anycloud-secure-tcp-client
+
+
+### 脚本中要完善的
+
+去重
+只处理https://github开头的
+
+### 读取xml url
+
+#### 解析xml获取url
+
+xml文件：
+https://itools.infineon.cn/mtb/manifests/
+https://itools.infineon.cn/mtb/manifests/mtb-super-manifest.zip
+
+
+
+xml节点：
+<uri>https://github.com/Infineon/cce-mtb-psoc6-dps310</uri>
+<board_uri>https://github.com/cypresssemiconductorco/TARGET_CY8CKIT-062-BLE</board_uri>
+
+#### 读取子仓库
+
+gh api -H "Accept: application/vnd.github+json" --hostname github-demo.devopshub.cn /repos/localadmin/localadmin/contents/
+
+gh api -H "Accept: application/vnd.github+json" --hostname github-demo.devopshub.cn /repos/Infineon/mtb-example-hal-adc-basic/contents/
+
+gh api -H "Accept: application/vnd.github+json" --hostname github-demo.devopshub.cn /repos/localadmin/localadmin/git/trees/TREE_SHA
+
+gh api -H "Accept: application/vnd.github+json" --hostname github.com /repos/ONLYOFFICE/DocumentServer/contents/
+
+https://github.com/ONLYOFFICE/DocumentServer
+
+gh api -H "Accept: application/vnd.github+json" --hostname github-demo.devopshub.cn /repos/aws/aws-iot-device-sdk-embedded-C/contents/
+
+gh api -H "Accept: application/vnd.github+json" --hostname github-demo.devopshub.cn /repos/aws/aws-iot-device-sdk-embedded-C/contents/.gitmodules
+```
+W3N1Ym1vZHVsZSAibGlicmFyaWVzLzNyZHBhcnR5L0NNb2NrIl0KCXBhdGggPSBsaWJyYXJpZXMvM3JkcGFydHkvQ01vY2sKCXVybCA9IGh0dHBzOi8vZ2l0aHViLmNvbS9UaHJvd1RoZVN3aXRjaC9DTW9jawpbc3VibW9kdWxlICJsaWJyYXJpZXMvc3RhbmRhcmQvY29yZU1RVFQiXQoJcGF0aCA9IGxpYnJhcmllcy9zdGFuZGFyZC9jb3JlTVFUVAoJYnJhbmNoID0gbWFpbgoJdXJsID0gaHR0cHM6Ly9naXRodWIuY29tL0ZyZWVSVE9TL2NvcmVNUVRULmdpdApbc3VibW9kdWxlICJsaWJyYXJpZXMvc3RhbmRhcmQvY29yZUhUVFAiXQoJcGF0aCA9IGxpYnJhcmllcy9zdGFuZGFyZC9jb3JlSFRUUAoJYnJhbmNoID0gbWFpbgoJdXJsID0gaHR0cHM6Ly9naXRodWIuY29tL0ZyZWVSVE9TL2NvcmVIVFRQLmdpdApbc3VibW9kdWxlICJsaWJyYXJpZXMvc3RhbmRhcmQvY29yZUpTT04iXQoJcGF0aCA9IGxpYnJhcmllcy9zdGFuZGFyZC9jb3JlSlNPTgoJYnJhbmNoID0gbWFpbgoJdXJsID0gaHR0cHM6Ly9naXRodWIuY29tL0ZyZWVSVE9TL2NvcmVKU09OLmdpdApbc3VibW9kdWxlICJsaWJyYXJpZXMvYXdzL2RldmljZS1zaGFkb3ctZm9yLWF3cy1pb3QtZW1iZWRkZWQtc2RrIl0KCXBhdGggPSBsaWJyYXJpZXMvYXdzL2RldmljZS1zaGFkb3ctZm9yLWF3cy1pb3QtZW1iZWRkZWQtc2RrCglicmFuY2ggPSBtYWluCgl1cmwgPSBodHRwczovL2dpdGh1Yi5jb20vYXdzL2RldmljZS1zaGFkb3ctZm9yLWF3cy1pb3QtZW1iZWRkZWQtc2RrLmdpdApbc3VibW9kdWxlICJsaWJyYXJpZXMvYXdzL2pvYnMtZm9yLWF3cy1pb3QtZW1iZWRkZWQtc2RrIl0KCXBhdGggPSBsaWJyYXJpZXMvYXdzL2pvYnMtZm9yLWF3cy1pb3QtZW1iZWRkZWQtc2RrCglicmFuY2ggPSBtYWluCgl1cmwgPSBodHRwczovL2dpdGh1Yi5jb20vYXdzL2pvYnMtZm9yLWF3cy1pb3QtZW1iZWRkZWQtc2RrLmdpdApbc3VibW9kdWxlICJsaWJyYXJpZXMvYXdzL2RldmljZS1kZWZlbmRlci1mb3ItYXdzLWlvdC1lbWJlZGRlZC1zZGsiXQoJcGF0aCA9IGxpYnJhcmllcy9hd3MvZGV2aWNlLWRlZmVuZGVyLWZvci1hd3MtaW90LWVtYmVkZGVkLXNkawoJYnJhbmNoID0gbWFpbgoJdXJsID0gaHR0cHM6Ly9naXRodWIuY29tL2F3cy9kZXZpY2UtZGVmZW5kZXItZm9yLWF3cy1pb3QtZW1iZWRkZWQtc2RrLmdpdApbc3VibW9kdWxlICJsaWJyYXJpZXMvc3RhbmRhcmQvY29yZVBLQ1MxMSJdCglwYXRoID0gbGlicmFyaWVzL3N0YW5kYXJkL2NvcmVQS0NTMTEKCWJyYW5jaCA9IG1haW4KCXVybCA9IGh0dHBzOi8vZ2l0aHViLmNvbS9GcmVlUlRPUy9jb3JlUEtDUzExLmdpdApbc3VibW9kdWxlICJsaWJyYXJpZXMvc3RhbmRhcmQvYmFja29mZkFsZ29yaXRobSJdCglwYXRoID0gbGlicmFyaWVzL3N0YW5kYXJkL2JhY2tvZmZBbGdvcml0aG0KCWJyYW5jaCA9IG1haW4KCXVybCA9IGh0dHBzOi8vZ2l0aHViLmNvbS9GcmVlUlRPUy9iYWNrb2ZmQWxnb3JpdGhtLmdpdApbc3VibW9kdWxlICJsaWJyYXJpZXMvYXdzL290YS1mb3ItYXdzLWlvdC1lbWJlZGRlZC1zZGsiXQoJcGF0aCA9IGxpYnJhcmllcy9hd3Mvb3RhLWZvci1hd3MtaW90LWVtYmVkZGVkLXNkawoJYnJhbmNoID0gbWFpbgoJdXJsID0gaHR0cHM6Ly9naXRodWIuY29tL2F3cy9vdGEtZm9yLWF3cy1pb3QtZW1iZWRkZWQtc2RrLmdpdApbc3VibW9kdWxlICJkZW1vcy9qb2JzL2pvYnNfZGVtb19tb3NxdWl0dG8vbGlibW9zcXVpdHRvIl0KCXBhdGggPSBkZW1vcy9qb2JzL2pvYnNfZGVtb19tb3NxdWl0dG8vbGlibW9zcXVpdHRvCgl1cmwgPSBodHRwczovL2dpdGh1Yi5jb20vZWNsaXBzZS9tb3NxdWl0dG8uZ2l0CltzdWJtb2R1bGUgImxpYnJhcmllcy9hd3MvZmxlZXQtcHJvdmlzaW9uaW5nLWZvci1hd3MtaW90LWVtYmVkZGVkLXNkayJdCglwYXRoID0gbGlicmFyaWVzL2F3cy9mbGeWNib3IKCXVybCA9IGh0dHBzOi8vZ2l0aHViLmNvbS9pbnRlbC90aW55Y2Jvcgpbc3VibW9kdWxlICJsaWJyYXJpZXMvYXdzL3NpZ3Y0LWZvci1hd3MtaW90LWVtYmVkZGVkLXNkayJdCglwYXRoID0gbGlicmFyaWVzL2F3cy9zaWd2NC1mb3ItYXdzLWlvdC1lbWJlZGRlZC1zZGsKCXVybCA9IGh0dHBzOi8vZ2l0aHViLmNvbS9hd3MvU2lnVjQtZm9yLUFXUy1Jb1QtZW1iZWRkZWQtc2RrLmdpdApbc3VibW9kdWxlICJsaWJyYXJpZXMvM3JkcGFydHkvbWJlZHRscyJdCglwYXRoID0gbGlicmFyaWVzLzNyZHBhcnR5L21iZWR0bHMKCXVybCA9IGh0dHBzOi8vZ2l0aHViLmNvbS9BUk1tYmVkL21iZWR0bHMK
+```
+
+https://github.com/aws/aws-iot-device-sdk-embedded-C
+
+### 思路
+
+下载zip包、解压、解析xml、获取url、保存url、读取url content获取子仓库、保存子仓库、、
+
+木头明:
+@云开春雷 在确认一下，子子里面的仓库还会有子仓库吗？要不要考虑多层镶套的情况
+
+云开春雷:
+理论上会存在的，espressif提供的就存在这种情况。似乎还存在环路的情况，但哪个库引起的还不确定
+
+木头明:
+还就是还是要考虑，而且还要考虑循环套用时要退出，要不就死循环了
+
+
+https://www.pstips.net/loading-and-processing-xml-files.html
 
 ## 定时任务脚本
 #脚本中调用的zabbix.ps1 的作用是Get-Content zabbix配置文内容并out-file到另一个文件。完全可以当作备份。
