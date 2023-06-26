@@ -15,7 +15,9 @@ $synclogPath = $PSScriptRoot+"\_temp\_logs\sync-"+$nowTime+".log"
 Write-Output "---DEBUG---,$nowTime,sync start" | Out-File -FilePath $synclogPath -Append
 type $synclogPath -Last 2
 
-$file="..\error-git-repos.txt"
+## ..\url-small.txt 全部同步，调这个$file的值 来实现差异化同步。
+## ..\error-git-repos.txt ## 如果同步失败，重新同步失败的，这个文件会自动生成
+$file="..\url-small.txt"
 $ghe="github-demo.devopshub.cn"
 $gheadmin="localadmin"
 $orgReady=$false

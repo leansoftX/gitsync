@@ -67,7 +67,8 @@ winget install --id GitHub.cli
 
 #### 登陆
 
-
+https://github-demo.devopshub.cn/settings/tokens
+pat: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
 
 gh auth login 
 gh auth login --hostname github-demo.devopshub.cn
@@ -119,7 +120,7 @@ gh: Not Found (HTTP 404)
 gh: This API operation needs the "admin:org" scope. To request it, run:  gh auth refresh -h github-demo.devopshub.cn -s admin:org
 ```
 
-gh api --method POST -H "Accept: application/vnd.github+json" /admin/organizations --hostname github-demo.devopshub.cn -f login='infintestorg1' -f profile_name='cli test.' -f admin='localadmin'
+gh api --method POST -H "Accept: application/vnd.github+json" /admin/organizations --hostname github-demo.devopshub.cn -f login='gitsyncdemo' -f profile_name='cli test.' -f admin='localadmin'
 gh api --method POST -H "Accept: application/vnd.github+json" /admin/organizations --hostname github-demo.devopshub.cn -f login='Infineon' -f profile_name='Infineon' -f admin='localadmin'
 ```json
 {
@@ -173,7 +174,7 @@ gh api \
  -F has_projects=true \
  -F has_wiki=true 
 
-gh api --method POST -H "Accept: application/vnd.github+json" --hostname github-demo.devopshub.cn /orgs/infintestorg1/repos -f name='demo_repo1'
+gh api --method POST -H "Accept: application/vnd.github+json" --hostname github-demo.devopshub.cn /orgs/gitsyncdemo/repos -f name='gitsyncdemo_repo'
 
 ```json
 {
@@ -477,3 +478,9 @@ $principal = New-ScheduledTaskPrincipal -UserId shi001admin -LogonType S4U
 $name = New-ScheduledTask -Action $action -Trigger  $trigger   -Settings $setting  -Principal $principal
 
 Register-ScheduledTask -TaskName  "testtask" -InputObject $name 
+
+
+到时把这个也加到获取url的那个脚本中，即先同步这些xml,然后在抓取url
+是的。先服务器内抓取并处理一遍更新，再把manifest放出来
+https://itools.infineon.cn/mtb/manifests/
+https://github-demo.devopshub.cn/mtb/manifests
