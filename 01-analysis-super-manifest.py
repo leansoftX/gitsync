@@ -35,13 +35,17 @@ def main():
     xml_content2 = get_xml_from_url(url2)
     uris = uris+extract_uri(xml_content2)
 
+    repo_uris_set = set()  # 使用集合来存储唯一的仓库URLs
+    for uri in uris:
+                xml_content_level02 = get_xml_from_url(uri)
+                repo_uris = extract_repo_uri(xml_content_level02)
+                for repo_uri in repo_uris:
+                    repo_uris_set.add(repo_uri)  # 将URL添加到集合中，达到去重的目的
+
     with open("repo_urls.txt", "w") as f:
-        for uri in uris:
-            xml_content_level02 = get_xml_from_url(uri)
-            repo_uris = extract_repo_uri(xml_content_level02)
-            for repo_uri in repo_uris:
-                f.write(repo_uri + "\n")
-        print("提取并保存完成，数据已写入'output.txt'文件。")
+        for repo_uri in repo_uris_set:  # 在对集合进行迭代
+            f.write(repo_uri + "\n")
+    print("提取并保存完成，数据已写入'repo_urls.txt'文件。")  # 更正文件名
 
 
 if __name__ == "__main__":
