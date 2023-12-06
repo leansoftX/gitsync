@@ -24,11 +24,12 @@ def clone_and_check_submodules(repo, f_sub):
             # 取出所有的submodules的url
             for section in config.sections():
                 submodule_repo = config[section]['url']
+                   # 移除.git后缀
+                submodule_repo= submodule_repo.replace(".git", "")
                 f_sub.write(submodule_repo + '\n')
 
                 # 递归处理子模块
                 clone_and_check_submodules(submodule_repo, f_sub)
-
 
 
         # 删除克隆的存储库
