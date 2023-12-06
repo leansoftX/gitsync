@@ -20,8 +20,8 @@ for dir in ["_temp", "_temp/_logs"]:
 
 # 定义基本变量
 now_time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%sss")
-sync_log_path = os.path.join("_temp/_logs", "sync-" + now_time + ".log")
-file_path = "repo_urls.txt"
+sync_log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_temp/_logs", "sync-" + now_time + ".log")
+file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "repo_urls.txt")
 ghe = "mtbgit.infineon.cn"
 ghe_admin = "localadmin"
 error_repos = []
@@ -30,6 +30,7 @@ write_log(sync_log_path, "---DEBUG---, {}, sync start".format(now_time))
 
 # 如果文件存在，读取文件内容
 if os.path.isfile(file_path):
+    os.chdir("_temp");
     with open(file_path) as f:
         urls = f.read().splitlines()
 
@@ -72,16 +73,18 @@ if os.path.isfile(file_path):
 
         if org_ready and repo_ready:
                 write_log(sync_log_path, "---DEBUG---, Clone Code from {}".format(url))
-
                 git_clone = run_command('git clone --mirror "{}" {}'.format(url, repo))
 
                 # if clone ok,will create repo dir
                 if os.path.isdir(repo):
                     os.chdir(repo)
+                    write_log(sync_log_path, "---DEBUG--- modify push url to github Enterprise:{}".format(ghe))
                     run_command('git remote set-url --push origin "https://{}/{}/{}"'.format(ghe, org, repo))
+                    write_log(sync_log_path, "---DEBUG---,start push to host:{} with arg: --mirror".format(ghe))
                     run_command('git push --mirror')
+                    write_log(sync_log_path, "---DEBUG---,push End. clear repo file")
                     os.chdir("..")
-                    shutil.rmtree(repo, ignore_errors=True)  # using Python's standard lib to force remove dir and its contents
+                    shutil.rmtree(repo, ignore_errors=True)  
                 else:
                     write_log(sync_log_path, "---DEBUG---, Clone {} Fail.".format(url))
         else:
