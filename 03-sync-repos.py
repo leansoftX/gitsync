@@ -40,38 +40,41 @@ if os.path.isfile(file_path):
 
     # 遍历文件中的每个URL
     for url in urls:
-        time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%sss")
-        write_log(sync_log_path, "---DEBUG---, {}, Start handle url: {}".format(time, url))
+        try:
+            time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%sss")
+            write_log(sync_log_path, "---DEBUG---, {}, Start handle url: {}".format(time, url))
 
-        parse_result = urlparse(url)
-        schema, domain, org, repo = parse_result.scheme, parse_result.netloc, parse_result.path.split('/')[1], parse_result.path.split('/')[2]
-        write_log(sync_log_path, "---DEBUG---, splitUrl: {}, {}, {}, {}".format(schema, domain, org, repo))
+            parse_result = urlparse(url)
+            schema, domain, org, repo = parse_result.scheme, parse_result.netloc, parse_result.path.split('/')[1], parse_result.path.split('/')[2]
+            write_log(sync_log_path, "---DEBUG---, splitUrl: {}, {}, {}, {}".format(schema, domain, org, repo))
 
-        org_check = run_command('gh api -H "Accept: application/vnd.github+json" --hostname {} /orgs/{}'.format(ghe, org))
-        write_log(sync_log_path, "---DEBUG---, {} check end, result: \n {}".format(org, org_check))
+            org_check = run_command('gh api -H "Accept: application/vnd.github+json" --hostname {} /orgs/{}'.format(ghe, org))
+            write_log(sync_log_path, "---DEBUG---, {} check end, result: \n {}".format(org, org_check))
 
-        org_ready = "node_id" in org_check
+            org_ready = "node_id" in org_check
 
-        if not org_ready:
-            org_create = run_command('gh api --method POST -H "Accept: application/vnd.github+json" /admin/organizations --hostname {} -f login="{}" -f profile_name="{}" -f admin="{}"'.format(ghe, org, org, ghe_admin))
-            write_log(sync_log_path, "---DEBUG---, {} create end, result: \n {}".format(org, org_create))
-            org_ready = "node_id" in org_create
+            if not org_ready:
+                org_create = run_command('gh api --method POST -H "Accept: application/vnd.github+json" /admin/organizations --hostname {} -f login="{}" -f profile_name="{}" -f admin="{}"'.format(ghe, org, org, ghe_admin))
+                write_log(sync_log_path, "---DEBUG---, {} create end, result: \n {}".format(org, org_create))
+                org_ready = "node_id" in org_create
+            
+            if org_ready:
+                try:
+                    repo_check = run_command('gh api -H "Accept: application/vnd.github+json" --hostname {} /repos/{}/{}'.format(ghe, org, repo))
+                except Exception as e:
+                    repo_check = {}
+                write_log(sync_log_path, "---DEBUG---, check is repo exist end, is not is start for create repo.".format(repo_check))
+ 
+                repo_ready = "node_id" in repo_check
 
-        if org_ready:
-            repo_check = run_command('gh api -H "Accept: application/vnd.github+json" --hostname {} /repos/{}/{}'.format(ghe, org, repo))
-            write_log(sync_log_path, "---DEBUG---, check is repo exist end, is not is start for create repo.".format(repo_check))
+                if not repo_ready:
+                    repo_create = run_command('gh api --method POST -H "Accept: application/vnd.github+json" --hostname {} /orgs/{}/repos -f name="{}"'.format(ghe, org, repo))
+                    write_log(sync_log_path, "---DEBUG--- {} create end, result: \n {}".format(repo, repo_create))
+                    repo_ready = "node_id" in repo_create
+            else:
+                repo_ready = False
 
-            repo_ready = "node_id" in repo_check
-
-            if not repo_ready:
-                repo_create = run_command('gh api --method POST -H "Accept: application/vnd.github+json" --hostname {} /orgs/{}/repos -f name="{}"'.format(ghe, org, repo))
-                write_log(sync_log_path, "---DEBUG--- {} create end, result: \n {}".format(repo, repo_create))
-                repo_ready = "node_id" in repo_create
-
-        else:
-            repo_ready = False
-
-        if org_ready and repo_ready:
+            if org_ready and repo_ready:
                 write_log(sync_log_path, "---DEBUG---, Clone Code from {}".format(url))
                 git_clone = run_command('git clone --mirror "{}" {}'.format(url, repo))
 
@@ -87,17 +90,19 @@ if os.path.isfile(file_path):
                     shutil.rmtree(repo, ignore_errors=True)  
                 else:
                     write_log(sync_log_path, "---DEBUG---, Clone {} Fail.".format(url))
-        else:
-            error_repos.append(url)
+            else:
+                error_repos.append(url)
+            
+            org_ready = False
+            repo_ready = False
 
-        org_ready = False 
-        repo_ready = False
+            time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%sss")
+            write_log(sync_log_path, "---DEBUG---, {}, url: {} handle End.".format(time, url))
 
-        time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%sss")
-        write_log(sync_log_path, "---DEBUG---, {}, url: {} handle End.".format(time, url))
+        except Exception as e:
+            write_log(sync_log_path, "---ERROR---, an exception occurred: {}".format(str(e)))
 else:
     write_log(sync_log_path, "---DEBUG---,ERROR: file {} not exists.".format(file_path))
-
 
 now_time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%sss")
 error_repos_log_path = os.path.join("_temp/_logs", "errorRepos-" + now_time + ".log")
