@@ -1,3 +1,2 @@
 https://github.com/leansoftX/SQLToolkit
 https://github.com/zhouwenyang/piggymetrics
-https://github.com/zhouwenyang/petshop-demo
