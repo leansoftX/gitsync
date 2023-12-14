@@ -128,9 +128,8 @@ def sync_github(file):
 
 
 def main():
-    repo_file=os.path.join(os.path.dirname(os.path.abspath(__file__)), "repo_urls.txt")
-    sync_github(repo_file)
-
+    mannual_file=os.path.join(os.path.dirname(os.path.abspath(__file__)), "mannual_repos.txt")
+    sync_github(mannual_file)
 
 
 if __name__ == "__main__":

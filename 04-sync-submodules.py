@@ -128,8 +128,8 @@ def sync_github(file):
 
 
 def main():
-    repo_file=os.path.join(os.path.dirname(os.path.abspath(__file__)), "repo_urls.txt")
-    sync_github(repo_file)
+    submodule_file=os.path.join(os.path.dirname(os.path.abspath(__file__)), "submodules.txt")
+    sync_github(submodule_file)
 
 
 
