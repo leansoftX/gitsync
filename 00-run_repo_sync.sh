@@ -2,7 +2,6 @@
 rm repo_urls.txt
 rm submodules.txt
 
-
 python3.9 01-analysis-super-manifest.py
 python3.9 02-analysis-submodules.py
 python3.9 03-sync-repos.py
