@@ -1,6 +1,11 @@
 import requests
 from lxml import etree
 
+# 新增：将要排除的组织全URL写进列表
+excluded_orgs = ["https://github.com/CyberonEBU", "https://github.com/golioth", 
+                 "https://github.com/memfault", "https://github.com/RutronikSystemSolutions",
+                 "https://github.com/sensiml", "https://github.com/Altia-Marketing", "https://github.com/edgeimpulse", "https://github.com/espressif"]
+
 def extract_uri(xml_content):
     root = etree.fromstring(xml_content)
     uri_tags = root.xpath('//uri')
@@ -21,10 +26,16 @@ def extract_repo_uri(xml_content):
     
     return repo_uris
 
-
 def get_xml_from_url(url):
     response = requests.get(url)
     return response.content
+
+# 新增：检查是否应排除该URL
+def is_excluded(url, organizations):
+    for org in organizations:
+        if url.startswith(org):  # 用startswith方法替代'in'，增加精度
+            return True
+    return False
 
 def main():
     url = "https://raw.githubusercontent.com/Infineon/mtb-super-manifest/v2.X/mtb-super-manifest-fv2.xml"
@@ -33,20 +44,22 @@ def main():
 
     url2="https://raw.githubusercontent.com/Infineon/mtb-super-manifest/v2.X/mtb-super-manifest.xml"
     xml_content2 = get_xml_from_url(url2)
-    uris = uris+extract_uri(xml_content2)
+    uris = uris + extract_uri(xml_content2)
 
-    repo_uris_set = set()  # 使用集合来存储唯一的仓库URLs
+    repo_uris_set = set()  
     for uri in uris:
-                xml_content_level02 = get_xml_from_url(uri)
-                repo_uris = extract_repo_uri(xml_content_level02)
-                for repo_uri in repo_uris:
-                    repo_uris_set.add(repo_uri)  # 将URL添加到集合中，达到去重的目的
+        xml_content_level02 = get_xml_from_url(uri)
+        repo_uris = extract_repo_uri(xml_content_level02)
+        for repo_uri in repo_uris:
+            # 修改了逻辑：如果URL没有被排除，才将其加入集合
+            if not is_excluded(repo_uri, excluded_orgs):
+                repo_uris_set.add(repo_uri)
 
     with open("repo_urls.txt", "w") as f:
-        for repo_uri in repo_uris_set:  # 在对集合进行迭代
+        for repo_uri in repo_uris_set:  
             f.write(repo_uri + "\n")
-    print("提取并保存完成，数据已写入'repo_urls.txt'文件。")  # 更正文件名
 
+    print("提取并保存完成，数据已写入'repo_urls.txt'文件。")
 
 if __name__ == "__main__":
     main()
