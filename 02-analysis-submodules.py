@@ -4,6 +4,15 @@ import os
 import configparser
 import time
 
+
+# 新增：替换仓库地址前缀的函数
+def replace_repo_url_prefix(filename, old_prefix, new_prefix):
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+    with open(filename, 'w') as f:
+        for line in lines:
+            f.write(line.replace(old_prefix, new_prefix))
+
 def clone_and_check_submodules(repo, f_sub):
     try:
         repo = repo.strip()
@@ -48,6 +57,11 @@ def main():
         for repo in repos:
             repo = repo.strip()
             clone_and_check_submodules(repo, f_sub)
+
+    # 使用新的前缀替换"submodules.txt"中的旧前缀
+    replace_repo_url_prefix("submodules.txt", "https://github.com/cypresssemiconductorco/", "https://github.com/Infineon/")
+
+
 
 if __name__ == "__main__":
     main()

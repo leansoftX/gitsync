@@ -37,6 +37,14 @@ def is_excluded(url, organizations):
             return True
     return False
 
+# 新增：替换仓库地址前缀的函数
+def replace_repo_url_prefix(filename, old_prefix, new_prefix):
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+    with open(filename, 'w') as f:
+        for line in lines:
+            f.write(line.replace(old_prefix, new_prefix))
+
 def main():
     url = "https://raw.githubusercontent.com/Infineon/mtb-super-manifest/v2.X/mtb-super-manifest-fv2.xml"
     xml_content = get_xml_from_url(url)
@@ -58,6 +66,9 @@ def main():
     with open("repo_urls.txt", "w") as f:
         for repo_uri in repo_uris_set:  
             f.write(repo_uri + "\n")
+    
+    # 使用新的前缀替换"repo_urls.txt"中的旧前缀
+    replace_repo_url_prefix("repo_urls.txt", "https://github.com/cypresssemiconductorco/", "https://github.com/Infineon/")
 
     print("提取并保存完成，数据已写入'repo_urls.txt'文件。")
 
