@@ -15,7 +15,7 @@ def compare_files(file1, file2):
             github_repos_tobe_sync.extend(data)
 
         # 打开并读取'goden.txt'文件
-        with open('goden.txt', 'r') as goden:
+        with open('golden_file.txt', 'r') as goden:
             goden_data = goden.readlines()
 
         # 将读取的数据转换为一个集合，以便于查找
@@ -32,9 +32,10 @@ def compare_files(file1, file2):
             if line not in goden_set:
                 not_in_goden.append(line)
 
-        # 打印不在'goden.txt'中的所有行
-        for line in not_in_goden:
-            print(line)
+        # 将不存在于'goden.txt'中的所有行写入到'not_in_goden.txt'文件中
+        with open('not_in_goden.txt', 'w') as out_file:
+            for line in not_in_goden:
+                out_file.write(line)
 
     except Exception as e:
         print(f"There was a problem: {str(e)}")
