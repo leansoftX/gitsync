@@ -126,12 +126,25 @@ def sync_github(file):
 
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
+def check_goldenfile(file):
+    try:
+        with open(file, 'r') as f:
+            if f.read().strip():
+                print("goldenfile不为空")
+                return False
+            else:
+                return True
+    except FileNotFoundError:
+        return True  # 如果文件不存在, 认为它是空的并继续执行
+
+
 
 def main():
-    repo_file=os.path.join(os.path.dirname(os.path.abspath(__file__)), "repo_urls.txt")
-    sync_github(repo_file)
-
-
+    if check_goldenfile('not_in_goden.txt'):    
+        repo_file=os.path.join(os.path.dirname(os.path.abspath(__file__)), "repo_urls.txt")
+        sync_github(repo_file)
+    else:
+        return
 
 if __name__ == "__main__":
     main()
