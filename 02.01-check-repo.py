@@ -26,8 +26,8 @@ def compare_files(file1, file2):
 
         # 检查每一行是否在'goden.txt'中
         for line in github_repos_tobe_sync:
-            # 忽略以"https://github.com/Infineon"开头的行
-            if line.startswith('https://github.com/Infineon'):
+            # 忽略仓库列表
+            if line.startswith('https://github.com/Infineon') or line.startswith('https://github.com/cypresssemiconductorco'):
                 continue
             if line not in goden_set:
                 not_in_goden.append(line)
