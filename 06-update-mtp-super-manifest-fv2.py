@@ -32,6 +32,10 @@ for parent in root.findall(".//middleware-manifest"):
         if not uri.text.startswith(prefix):
             parent.remove(uri)
 
+# 替换所有保留的uri中的github.com为mtbgit.infineon.cn
+for uri in root.findall(".//uri"):
+    uri.text = uri.text.replace('github.com', 'mtbgit.infineon.cn')
+
 # 将修改后的XML写入新文件
 tree = ET.ElementTree(root)
 modified_xml_path = "mtb-super-manifest-fv2-mirror.xml"
@@ -58,7 +62,7 @@ os.replace(modified_xml_path, destination_file_path)
 # Git 添加、提交和推送
 os.chdir(repo_path)
 subprocess.run(["git", "add", modified_xml_path], check=True)
-subprocess.run(["git", "commit", "-m", "Update mtb-super-manifest-fv2-mirror.xml"], check=True)
+subprocess.run(["git", "commit", "-m", "Update mtb-super-manifest-fv2-mirror.xml with URL replacements"], check=True)
 subprocess.run(["git", "push"], check=True)
 
 print("Git操作完成，文件已更新和推送到远程仓库")
