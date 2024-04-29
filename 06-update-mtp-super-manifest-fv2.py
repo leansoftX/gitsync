@@ -33,6 +33,7 @@ for parent in root.findall(".//middleware-manifest"):
 # 将修改后的XML写入新文件
 tree = ET.ElementTree(root)
 with open("mtb-super-manifest-fv2-mirror.xml", "wb") as modified_file:
-    tree.write(modified_file, encoding='utf-8', xml_declaration=True)
+    # 写入文件时不包括XML声明，并确保使用正确的编码
+    tree.write(modified_file, encoding='utf-8', xml_declaration=False)
 
 print("修改后的XML文件已保存为 'mtb-super-manifest-fv2-mirror.xml'")
