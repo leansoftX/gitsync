@@ -32,7 +32,10 @@ def get_github_repos(url):
 # Get the list of Infineon GitHub repositories
 repos = get_github_repos(url)
 if repos:
-    for repo in repos:
-        print(repo)
+    # Open the file in append mode to preserve existing content
+    with open('repo_urls.txt', 'a') as file:
+        for repo in repos:
+            file.write(repo + '\n')
+    print("Repository URLs have been appended to repo_urls.txt.")
 else:
     print("Failed to retrieve or parse the XML.")
