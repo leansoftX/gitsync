@@ -34,8 +34,9 @@ for parent in root.findall(".//middleware-manifest"):
 
 # 删除空的父节点
 for parent in root.findall(".//*"):
-    if len(parent.getchildren()) == 0:
+    if len(list(parent)) == 0:
         parent.getparent().remove(parent)
+
 
 # 将修改后的XML写入新文件
 tree = ET.ElementTree(root)
