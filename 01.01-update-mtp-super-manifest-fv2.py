@@ -12,31 +12,29 @@ xml_content = response.text
 # 解析XML内容
 root = ET.fromstring(xml_content)
 
-# 遍历所有<uri>节点并根据条件删除
-prefix = "https://github.com/Infineon"
-for parent in root.findall(".//board-manifest"):
-    uris = parent.findall("uri")
-    for uri in uris:
-        if not uri.text.startswith(prefix):
-            parent.remove(uri)
+# 清理无用的uri和空的manifests
+def clean_manifests(root_element, manifest_tag):
+    manifest_list = root_element.findall(f".//{manifest_tag}-list")
+    for manifest_group in manifest_list:
+        manifests = list(manifest_group)  # 获取所有子元素
+        for manifest in manifests:
+            uris = manifest.findall("uri")
+            for uri in uris:
+                if not uri.text.startswith("https://github.com/Infineon"):
+                    manifest.remove(uri)
+            if len(manifest.findall("uri")) == 0:  # 检查是否还有uri子元素
+                manifest_group.remove(manifest)  # 从其父元素中删除
 
-for parent in root.findall(".//app-manifest"):
-    uris = parent.findall("uri")
-    for uri in uris:
-        if not uri.text.startswith(prefix):
-            parent.remove(uri)
+# 清理board-manifest, app-manifest, middleware-manifest
+clean_manifests(root, "board-manifest")
+clean_manifests(root, "app-manifest")
+clean_manifests(root, "middleware-manifest")
 
-for parent in root.findall(".//middleware-manifest"):
-    uris = parent.findall("uri")
-    for uri in uris:
-        if not uri.text.startswith(prefix):
-            parent.remove(uri)
+# 将修改后的XML写入新文件前进行字符串替换
+xml_str = ET.tostring(root, encoding='unicode')
+xml_str = xml_str.replace("https://github.com", "https://mtbgit.infineon.cn")
 
-
-
-
-# 将修改后的XML写入新文件
-tree = ET.ElementTree(root)
+tree = ET.ElementTree(ET.fromstring(xml_str))
 modified_xml_path = "mtb-super-manifest-fv2-mirror.xml"
 with open(modified_xml_path, "wb") as modified_file:
     tree.write(modified_file, encoding='utf-8', xml_declaration=False)
