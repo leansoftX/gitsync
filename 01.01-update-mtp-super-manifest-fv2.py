@@ -35,7 +35,11 @@ for parent in root.findall(".//middleware-manifest"):
 # 删除空的父节点
 for parent in root.findall(".//*"):
     if len(list(parent)) == 0:
-        parent.getparent().remove(parent)
+        for ancestor in parent.iterancestors():
+            if ancestor is not None:
+                ancestor.remove(parent)
+                break
+
 
 
 # 将修改后的XML写入新文件
